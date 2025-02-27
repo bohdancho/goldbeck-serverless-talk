@@ -25,6 +25,18 @@ kurz über mich
 - I use neovim, btw
 
 <!-- end_slide -->
+
+Kapitel:
+- Serverless im Allgemeinen
+- Werdegang (VPS => k8s/ECS/AKS => Lambda => CF)
+    * visuelles Schema VPS vs Cluster
+    * Users/Time Graph
+    * Serverful => Serverless Schema (mit Node etc)
+    * nochmal Users/Time Graph
+- V8 (Cloudflare)
+- Zusammenfassung (Tabelle ?)
+- Bonus: Vim macros
+<!-- end_slide -->
 ---
 ```
 theme:
