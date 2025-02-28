@@ -15,14 +15,36 @@ kurz über mich
 
 - September 2024: Praktikum bei GOLDBECK
 - seit Oktober 2024 dualer Student in Informatik an der <span style="color:blue">DHSN</span> in Leipzig
+<!-- speaker_note: Oktoberfest -->
 <!-- pause -->
 - Aussprache: <span style="color: red">~['bo:dan']~</span> <span style="color:green">[ˈdɛn]</span> / <span style="color:green">[bɔgˈdaːn]</span>
+<!-- speaker_note: Slawischer Vornahme, Deutsch nicht meine Muttersprache -->
 <!-- pause -->
 - Vorerfahrung: <span>React</span>, Angular, (NodeJS) => Ziel: Fullstack
 <!-- pause -->
 - Speedcubing, Gitarre, Volleyball
 <!-- pause -->
 - I use neovim, btw
+
+<!-- end_slide -->
+
+Serverless in einem Satz
+---
+
+Eine Anfrage = eine Server-Instanz
+<!-- speaker_note: kein durchgehend laufender Server -->
+<!-- speaker_note: alles andere leitet sich davon ab -->
+<!-- speaker_note: darauf werde ich noch zurückkommen -->
+
+<!-- end_slide -->
+
+Werdegang
+---
+
+# bare metal/VM/Vor-Ort-Server
+https://app.eraser.io/workspace/2mp2Rwob62RywpK2RRte
+
+
 
 <!-- end_slide -->
 
@@ -33,11 +55,14 @@ Kapitel:
     * Users/Time Graph
     * Serverful => Serverless Schema (mit Node etc)
     * nochmal Users/Time Graph
-- V8 (Cloudflare)
+- Vor/Nachteile
+- V8 (Cloudflare Workers)
 - Zusammenfassung (Tabelle ?)
 - Bonus: Vim macros
 <!-- end_slide -->
 ---
+ 
+
 ```
 theme:
   # Specify it by name for built-in themes
