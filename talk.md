@@ -28,22 +28,30 @@ kurz über mich
 
 <!-- end_slide -->
 
-Serverless in einem Satz
+Inhaltsverzeichnis
+---
+<!-- end_slide -->
+
+Serverless? Hä? Was das?
 ---
 
-Eine Anfrage = eine Server-Instanz
+Abstimmung mit Emojis (nie gehört / mal am Rande was von gehört / kenne mich gut mit aus)
+
+<!-- end_slide -->
+
+Serverless = Einweg-Server
+---
+
 <!-- speaker_note: kein durchgehend laufender Server -->
 <!-- speaker_note: alles andere leitet sich davon ab -->
 <!-- speaker_note: darauf werde ich noch zurückkommen -->
-
 <!-- end_slide -->
 
 Werdegang
 ---
 
-# bare metal/VM/Vor-Ort-Server
+# bare metal/VM => Cluster => Lambda
 https://app.eraser.io/workspace/2mp2Rwob62RywpK2RRte
-
 
 
 <!-- end_slide -->
@@ -58,7 +66,11 @@ Kapitel:
 - Vor/Nachteile
 - V8 (Cloudflare Workers)
 - Zusammenfassung (Tabelle ?)
-- Bonus: Vim macros
+- offene Nachbarthemen:
+    * Edge (CDN, Edge Location, Edge Runtime)
+    * SSR, PPR
+    * DB sharding / DB replicating
+- Bonus: Benchmarking tool for G2P
 <!-- end_slide -->
 ---
  
