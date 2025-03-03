@@ -35,7 +35,17 @@ Inhaltsverzeichnis
 Serverless? Hä? Was das?
 ---
 
-Abstimmung mit Emojis (nie gehört / mal am Rande was von gehört / kenne mich gut mit aus)
+<!-- column_layout: [1,1,1] -->
+
+<!-- column: 0 -->
+noch nie gehört:
+![](./assets/face-with-open-mouth.png)
+<!-- column: 1 -->
+mal am Rande gehört:
+![](./assets/clapping-hands.png)
+<!-- column: 2 -->
+kenne mich gut mit aus:
+![](./assets/thumbs-up.png)
 
 <!-- end_slide -->
 
@@ -45,15 +55,238 @@ Serverless = Einweg-Server
 <!-- speaker_note: kein durchgehend laufender Server -->
 <!-- speaker_note: alles andere leitet sich davon ab -->
 <!-- speaker_note: darauf werde ich noch zurückkommen -->
+
+
+<!-- pause -->
+Warum soll mich das interessieren?
+<!-- pause -->
+- Pay as you go
+<!-- pause -->
+- Scale to zero
+<!-- pause -->
+- Automatic scaling
+<!-- pause -->
+- Geringerer Infra-Aufwand
+
 <!-- end_slide -->
 
 Werdegang
 ---
 
-# bare metal/VM => Cluster => Lambda
-https://app.eraser.io/workspace/2mp2Rwob62RywpK2RRte
+# bare metal/VM
 
+- ein einzelner Server
+- selbst Linux verwalten
+- nur vertical Scaling
 
+![](./assets/single-server.png) 
+
+<!-- end_slide -->
+
+Werdegang
+---
+
+# Cluster (horizontal scaling)
+
+- Orchestrator (Load balancer)
+- Alle Instanzen leben / on demand hochspinnen
+- on demand: dauert => evtl. dead requests
+- Overprovision vs Wartezeit
+
+![](./assets/cluster.png) 
+<!-- end_slide -->
+Werdegang
+---
+
+# Cluster (horizontal scaling)
+
+<!-- speaker_note: green - feste Anzahl an Instanzen passt perfekt, immer gleich belastet -->
+
+![](./assets/usage-graph-1.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/usage-graph-2.png)
+<!-- speaker_note: gelb - weniger optimal. idle time, overprovisioning -->
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/usage-graph-3.png)
+<!-- speaker_note: threshhold - raten; Verzögerung  -->
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/usage-graph-4.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/usage-graph-5.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/usage-graph-5.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+## Singular instance startup
+![](./assets/single-instance-1.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+## Singular instance startup
+![](./assets/single-instance-2.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+![](./assets/single-instance-3.png)
+<!-- end_slide -->
+
+Werdegang
+---
+# Cluster (horizontal scaling)
+
+<!-- column_layout: [1,1] -->
+<!-- column: 0 -->
+![](./assets/own-cluster.png)
+<!-- column: 1 -->
+<!-- pause -->
+- ? wann sollen neue Instanzen hochgespinned werden
+<!-- pause -->
+- ? wie lange soll die neue Instanz leben
+<!-- pause -->
+- cold starts (node_modules, DB connection...)
+<!-- pause -->
+- muss stateless sein
+<!-- pause -->
+- "langsame" Reaktionszeiten
+
+<!-- end_slide -->
+
+Werdegang
+---
+# We accidentally invented *Serverless*!
+<!-- speaker_note: bereits existierende Linux Umgebungen -->
+![](./assets/serverless-1.png) 
+<!-- end_slide -->
+
+Werdegang
+---
+# We accidentally invented *Serverless*!
+<!-- speaker_note: Node Runtime + Code wird nach Bedarf (Anfrage kommt) reingeladen -->
+![](./assets/serverless-2.png) 
+<!-- end_slide -->
+
+Werdegang
+---
+# We accidentally invented *Serverless*!
+![](./assets/serverless-3.png) 
+<!-- end_slide -->
+
+Werdegang
+---
+# We accidentally invented *Serverless*!
+<!-- speaker_note: Anfrage => Instanz hochspinnen -> Bearbeitung -> Instanz töten, es sei denn gleich kommt noch was -->
+<!-- speaker_note: deswegen Einweg-server -->
+<!-- speaker_note: 10k Anfragen auf einmal => kein Ding! (Gefahr!) (Startups) -->
+<!-- speaker_note: nur budget exceeded alerts bei AWS, keine Kostendeckelung -->
+
+<!-- column_layout: [1,1] -->
+<!-- column: 0 -->
+![](./assets/serverless-4.png) 
+
+<!-- column: 1 -->
+- Lebenszyklus: Anfrage => Instanz hochspinnen => Bearbeitung => *Instanz töten
+<!-- pause -->
+*es sei denn gleich kommt noch was 
+
+<!-- pause -->
+- Automatic scaling
+<!-- pause -->
+- => Vorsicht! keine explizite Kostendeckelung bei AWS
+<!-- pause -->
+- Scale to zero
+<!-- pause -->
+- Geringerer Infra-Aufwand
+<!-- pause -->
+- Pay as you go
+<!-- end_slide -->
+
+Classisches Serverless
+---
+# Pay as you go
+- GB*s (1 Sekunde Laufzeit von 1 Lambda Funktion mit 1 GB RAM)
+<!-- pause -->
+
+<!-- column_layout: [1,1,1] -->
+
+<!-- column: 0 -->
+![](./assets/serverless-pricing-1.png) 
+<!-- pause -->
+
+<!-- column: 1 -->
+![](./assets/serverless-pricing-2.png) 
+<!-- pause -->
+
+<!-- column: 2 -->
+![](./assets/serverless-pricing-3.png) 
+
+<!-- reset_layout -->
+
+# Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
+<!-- end_slide -->
+
+# Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
+![](./assets/worker-1.png) 
+<!-- end_slide -->
+
+# Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
+![](./assets/worker-2.png) 
+<!-- end_slide -->
+
+# Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
+
+<!-- column_layout: [1,1] -->
+<!-- column: 0 -->
+![](./assets/worker-3.png) 
+
+<!-- pause -->
+<!-- column: 1 -->
+- "pay as you use"
+<!-- pause -->
+- Pricing: ms of CPU time
+<!-- end_slide -->
+
+Anwendbarkeit bei GOLDBECK
+---
+![image:width:60%](./assets/go2fries-lambda.png) 
+
+<!-- end_slide -->
+
+Offene Nachbarthemen
+---
+<!-- pause -->
+- Edge (CDN, Edge Location, Edge Runtime)
+<!-- pause -->
+- SSR, PPR
+<!-- pause -->
+- DB sharding / DB replicating
+<!-- pause -->
 <!-- end_slide -->
 
 Kapitel:
@@ -65,11 +298,12 @@ Kapitel:
     * nochmal Users/Time Graph
 - Vor/Nachteile
 - V8 (Cloudflare Workers)
-- Zusammenfassung (Tabelle ?)
+- Anwendbarkeit bei GOLDBECK
 - offene Nachbarthemen:
     * Edge (CDN, Edge Location, Edge Runtime)
     * SSR, PPR
     * DB sharding / DB replicating
+- Acknowledgment (Theo)
 - Bonus: Benchmarking tool for G2P
 <!-- end_slide -->
 ---
@@ -154,14 +388,14 @@ Code highlighting is enabled for code blocks that include the most commonly used
 
 ```rust
 // Rust
-fn greet() -> &'static str {
+fn greet() => &'static str {
     "hi mom"
 }
 ```
 
 ```python
 # Python
-def greet() -> str:
+def greet() => str:
     return "hi mom"
 ```
 
