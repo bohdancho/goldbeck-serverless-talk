@@ -136,33 +136,35 @@ Werdegang
 Werdegang
 ---
 # Cluster (horizontal scaling)
+<!-- speaker_note: das alte Threshhold reicht nicht aus -->
 ![](./assets/usage-graph-4.png)
 <!-- end_slide -->
 
 Werdegang
 ---
 # Cluster (horizontal scaling)
+<!-- speaker_note: overprovisioning (Leerlaufzeiten) -->
 ![](./assets/usage-graph-5.png)
 <!-- end_slide -->
 
 Werdegang
 ---
 # Cluster (horizontal scaling)
-## Singular instance startup
+## Singular instance dynamic startup
 ![](./assets/single-instance-1.png)
 <!-- end_slide -->
 
 Werdegang
 ---
 # Cluster (horizontal scaling)
-## Singular instance startup
+## Singular instance dynamic startup
 ![](./assets/single-instance-2.png)
 <!-- end_slide -->
 
 Werdegang
 ---
 # Cluster (horizontal scaling)
-## Singular instance startup
+## Singular instance dynamic startup
 ![](./assets/single-instance-3.png)
 <!-- end_slide -->
 
@@ -184,6 +186,7 @@ Werdegang
 - muss stateless sein
 <!-- pause -->
 - "langsame" Reaktionszeiten
+<!-- speaker_note: langsame Reaktionszeiten ist letzter Punkt, dann Serverless -->
 
 <!-- end_slide -->
 
@@ -330,13 +333,20 @@ Acknowledgment
 Bonus: Benchmarking-Codeschnipsel
 ---
 
-- Ausgangspunkt: eine Klasse mit echten Daten benchmarken
+- Ausgangspunkt: eine Klasse mit echten Daten benchmarken (Go2Price, Parsing von 10k+ Formeln)
+<!-- pause -->
 - Probleme beim händischen Testing:
-    * umständlich im UI nachzustellen
-    * Input nicht immer identisch
-    * die gesamte Aufrufkette dauert viel länger als das, was wir benchmarken wollen
-    * 100 mal aufrufen und Durchschnitt nehmen - geht nicht
+<!-- pause -->
+  * umständlich im UI nachzustellen
+<!-- pause -->
+  * Input nicht immer identisch
+<!-- pause -->
+  * die gesamte Aufrufkette dauert viel länger als das, was wir benchmarken wollen
+<!-- pause -->
+  * 100 mal aufrufen und Durchschnitt nehmen - geht nicht
+<!-- pause -->
 - Lösung: Payload in IndexedDB persistieren
+<!-- speaker_note: nach `Lösung` im Browser zeigen... -->
 
 <!-- end_slide -->
 Bonus: Benchmarking-Codeschnipsel
@@ -373,6 +383,12 @@ constructor() {
 }
 ```
 <!-- column: 1 -->
+
+```ts
+@PersistForBenchmarking
+public updateFormulasOnFormulasRemovedAndAdded$({
+```
+
 ```ts
 function PersistForBenchmarking(
   _target: any,
@@ -385,11 +401,6 @@ function PersistForBenchmarking(
     return originalMethod.apply(this, args);
   };
 }
-```
-
-```ts
-@PersistForBenchmarking
-public updateFormulasOnFormulasRemovedAndAdded$({
 ```
 
 <!-- end_slide -->
