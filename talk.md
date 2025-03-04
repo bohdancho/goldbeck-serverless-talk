@@ -30,6 +30,18 @@ kurz über mich
 
 Inhaltsverzeichnis
 ---
+1. Serverless kurz gesagt
+<!-- pause -->
+2. Werdegang
+<!-- pause -->
+3. Classisches Serverless
+<!-- pause -->
+4. Cloudflare Workers
+<!-- pause -->
+5. Anwendbarkeit bei GOLDBECK
+<!-- pause -->
+6. (Bonus: Benchmarking-Codeschnipsel)
+
 <!-- end_slide -->
 
 Serverless? Hä? Was das?
@@ -60,6 +72,8 @@ Serverless = Einweg-Server
 <!-- pause -->
 Warum soll mich das interessieren?
 <!-- pause -->
+- Abwechslung von der Enterprise-Welt
+<!-- pause -->
 - Pay as you go
 <!-- pause -->
 - Scale to zero
@@ -88,10 +102,10 @@ Werdegang
 
 # Cluster (horizontal scaling)
 
-- Orchestrator (Load balancer)
-- Alle Instanzen leben / on demand hochspinnen
+- orchestrator (Load balancer)
+- alle Instanzen leben / on demand hochspinnen
 - on demand: dauert => evtl. dead requests
-- Overprovision vs Wartezeit
+- overprovision vs Wartezeit
 
 ![](./assets/cluster.png) 
 <!-- end_slide -->
@@ -134,12 +148,6 @@ Werdegang
 Werdegang
 ---
 # Cluster (horizontal scaling)
-![](./assets/usage-graph-5.png)
-<!-- end_slide -->
-
-Werdegang
----
-# Cluster (horizontal scaling)
 ## Singular instance startup
 ![](./assets/single-instance-1.png)
 <!-- end_slide -->
@@ -154,6 +162,7 @@ Werdegang
 Werdegang
 ---
 # Cluster (horizontal scaling)
+## Singular instance startup
 ![](./assets/single-instance-3.png)
 <!-- end_slide -->
 
@@ -201,10 +210,12 @@ Werdegang
 Werdegang
 ---
 # We accidentally invented *Serverless*!
-<!-- speaker_note: Anfrage => Instanz hochspinnen -> Bearbeitung -> Instanz töten, es sei denn gleich kommt noch was -->
-<!-- speaker_note: deswegen Einweg-server -->
-<!-- speaker_note: 10k Anfragen auf einmal => kein Ding! (Gefahr!) (Startups) -->
-<!-- speaker_note: nur budget exceeded alerts bei AWS, keine Kostendeckelung -->
+![](./assets/serverless-4.png) 
+<!-- end_slide -->
+
+Werdegang
+---
+# We accidentally invented *Serverless*!
 
 <!-- column_layout: [1,1] -->
 <!-- column: 0 -->
@@ -248,17 +259,30 @@ Classisches Serverless
 
 <!-- reset_layout -->
 
+<!-- pause -->
 # Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
 <!-- end_slide -->
 
+Cloudflare Workers
+---
 # Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
 ![](./assets/worker-1.png) 
 <!-- end_slide -->
 
+Cloudflare Workers
+---
 # Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
 ![](./assets/worker-2.png) 
 <!-- end_slide -->
 
+Cloudflare Workers
+---
+# Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
+![](./assets/worker-3.png) 
+<!-- end_slide -->
+
+Cloudflare Workers
+---
 # Luft nach oben: lange Ausführungszeit aber wenig CPU-Last?
 
 <!-- column_layout: [1,1] -->
@@ -266,7 +290,14 @@ Classisches Serverless
 ![](./assets/worker-3.png) 
 
 <!-- pause -->
+
 <!-- column: 1 -->
+- V8: JS Engine (von Google), wird benutzt im Browser
+<!-- speaker_note: Bun - WebKit's JavaScriptCore, Node/Deno - V8 -->
+<!-- speaker_note: von Runtime trennen -->
+<!-- speaker_note: Isolates - eigener Heap etc, komplette Isolierung -->
+
+<!-- pause -->
 - "pay as you use"
 <!-- pause -->
 - Pricing: ms of CPU time
@@ -274,6 +305,7 @@ Classisches Serverless
 
 Anwendbarkeit bei GOLDBECK
 ---
+<!-- pause -->
 ![image:width:60%](./assets/go2fries-lambda.png) 
 
 <!-- end_slide -->
@@ -286,271 +318,84 @@ Offene Nachbarthemen
 - SSR, PPR
 <!-- pause -->
 - DB sharding / DB replicating
-<!-- pause -->
 <!-- end_slide -->
 
-Kapitel:
-- Serverless im Allgemeinen
-- Werdegang (VPS => k8s/ECS/AKS => Lambda => CF)
-    * visuelles Schema VPS vs Cluster
-    * Users/Time Graph
-    * Serverful => Serverless Schema (mit Node etc)
-    * nochmal Users/Time Graph
-- Vor/Nachteile
-- V8 (Cloudflare Workers)
-- Anwendbarkeit bei GOLDBECK
-- offene Nachbarthemen:
-    * Edge (CDN, Edge Location, Edge Runtime)
-    * SSR, PPR
-    * DB sharding / DB replicating
-- Acknowledgment (Theo)
-- Bonus: Benchmarking tool for G2P
-<!-- end_slide -->
+Acknowledgment
 ---
- 
-
-```
-theme:
-  # Specify it by name for built-in themes
-  name: my-favorite-theme
-
-  # Otherwise specify the path for it
-  path: /home/myself/themes/epic.yaml
-
-  # Or override parts of the theme right here
-  override:
-    default:
-      colors:
-        foreground: white
----
-```
-
-<!-- end_slide -->
-```
-
-
-Headers
----
-
-Using commonmark setext headers allows you to set titles for your slides (like seen above!):
-
-<!-- speaker_note: this is also a speaker note -->
-```
-Headers
----
-```
-
-# Other headers
-
-All other header types are simply treated as headers within your slide.
-
-## Subheaders
-### And more
+![image:width:40%](./assets/theo-channel.png) 
+![image:width:40%](./assets/theo-video.png) 
 
 <!-- end_slide -->
 
-Slide commands
+Bonus: Benchmarking-Codeschnipsel
 ---
 
-Certain commands in the form of HTML comments can be used:
-
-# Ending slides
-
-In order to end a single slide, use:
-
-```html
-<!-- end_slide -->
-```
-
-# Creating pauses
-
-Slides can be paused by using the `pause` command:
-
-```html
-<!-- pause -->
-```
-
-This allows you to:
-
-<!-- pause -->
-* Create suspense.
-<!-- pause -->
-* Have more interactive presentations.
-<!-- pause -->
-* Possibly more!
+- Ausgangspunkt: eine Klasse mit echten Daten benchmarken
+- Probleme beim händischen Testing:
+    * umständlich im UI nachzustellen
+    * Input nicht immer identisch
+    * die gesamte Aufrufkette dauert viel länger als das, was wir benchmarken wollen
+    * 100 mal aufrufen und Durchschnitt nehmen - geht nicht
+- Lösung: Payload in IndexedDB persistieren
 
 <!-- end_slide -->
-
-Code highlighting
+Bonus: Benchmarking-Codeschnipsel
 ---
 
-Code highlighting is enabled for code blocks that include the most commonly used programming languages:
-
-```rust
-// Rust
-fn greet() => &'static str {
-    "hi mom"
-}
-```
-
-```python
-# Python
-def greet() => str:
-    return "hi mom"
-```
-
-```cpp
-// C++
-string greet() {
-    return "hi mom";
-}
-```
-
-And many more!
-
-<!-- end_slide -->
-
-Dynamic code highlighting
----
-
-Select specific subsets of lines to be highlighted dynamically as you move to the next slide. Optionally enable line
-numbers to make it easier to specify which lines you're referring to!
-
-```rust {1-4|6-10|all} +line_numbers
-#[derive(Clone, Debug)]
-struct Person {
-    name: String,
-}
-
-impl Person {
-    fn say_hello(&self) {
-        println!("hello, I'm {}", self.name)
-    }
-}
-```
-
-<!-- end_slide -->
-
-Snippet execution
----
-
-Code snippets can be executed:
-
-* For various languages, including compiled ones.
-* Their output is shown in real time.
-* Unimportant lines can be hidden so they don't clutter what you're trying to convey.
-* By default by pressing `<ctrl-e>`.
-
-```rust +exec
-# use std::thread::sleep;
-# use std::time::Duration;
-fn main() {
-    let names = ["Alice", "Bob", "Eve", "Mallory", "Trent"];
-    for name in names {
-        println!("Hi {name}!");
-        sleep(Duration::from_millis(500));
-    }
-}
-```
-
-<!-- end_slide -->
-
-Images
----
-
-Image rendering is supported as long as you're using iterm2, your terminal supports
-the kitty graphics protocol (such as the kitty terminal itself!), or the sixel format.
-
-* Include images in your slides by using `![](path-to-image.extension)`.
-* Images will be rendered in **their original size**.
-    * If they're too big they will be scaled down to fit the screen.
-
-![](doge.png)
-
-_Picture by Alexis Bailey / CC BY-NC 4.0_
-
-<!-- end_slide -->
-
-Column layouts
----
-
-<!-- column_layout: [2, 1] -->
-
+<!-- column_layout: [3,2] -->
 <!-- column: 0 -->
+```ts
+constructor() {
+  window.benchmark = async (method, qty = 1) => {
+    if (!this[method]) {
+      console.log('invalid method');
+      return;
+    }
 
-Column layouts let you organize content into columns.
+    const payload = await readFromDB(method);
+    if (!payload) {
+      console.log('no cached payload');
+      return;
+    }
 
-Here you can place code:
+    const results = [];
+    for (let i = 0; i < qty; i++) {
+      const start = performance.now();
+      await firstValueFrom(this[method](payload));
+      const end = performance.now();
+      results.push(end - start);
+    }
 
-```rust
-fn potato() -> u32 {
-    42
+    const sum = results.reduce((prev, cur) => prev + cur, 0)
+    const avg = sum / results.length;
+    console.log('Avg: ', avg);
+  };
+}
+```
+<!-- column: 1 -->
+```ts
+function PersistForBenchmarking(
+  _target: any,
+  propertyKey: string,
+  descriptor: TypedPropertyDescriptor<Function>
+) {
+  const originalMethod = descriptor.value;
+  descriptor.value = function (...args: any[]) {
+    writeToDB(propertyKey, args[0]);
+    return originalMethod.apply(this, args);
+  };
 }
 ```
 
-Plus pretty much anything else:
-* Bullet points.
-* Images.
-* _more_!
-
-<!-- column: 1 -->
-
-![](doge.png)
-
-_Picture by Alexis Bailey / CC BY-NC 4.0_
-
-<!-- reset_layout -->
-
-Because we just reset the layout, this text is now below both of the columns. Code and any other element will now look
-like it usually does:
-
-```python
-print("Hello world!")
+```ts
+@PersistForBenchmarking
+public updateFormulasOnFormulasRemovedAndAdded$({
 ```
 
 <!-- end_slide -->
 
-Text formatting
+Vielen Dank für eure Aufmerksamkeit!
 ---
-
-Text formatting works as expected:
-
-* **This is bold text**.
-* _This is italics_.
-* **This is bold _and this is bold and italic_**.
-* ~This is strikethrough text.~
-* Inline code `is also supported`.
-* Links look like this [](https://example.com/)
-* Text can be <span style="color: red">colored</span>.
-* Text background color can be <span style="color: blue; background-color: black">changed too</span>.
+![image:width:30%](./assets/pepe.png)
 
 <!-- end_slide -->
-
-Other elements
----
-
-Other elements supported are:
-
-# Alerts
-
-> [!caution]
-> Github style alerts
-
-# Tables
-
-| Name | Taste |
-| ------ | ------ |
-| Potato | Great |
-| Carrot | Yuck |
-
-# Block quotes
-
-> Lorem ipsum dolor sit amet. Eos laudantium animi ut ipsam beataeet
-> et exercitationem deleniti et quia maiores a cumque enim et
-> aspernatur nesciunt sed adipisci quis.
-
-# Thematic breaks
-
-A horizontal line by using `---`.
-
----

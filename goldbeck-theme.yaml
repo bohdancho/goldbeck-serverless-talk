@@ -19,11 +19,11 @@ code:
   alignment: center
   minimum_size: 50
   minimum_margin:
-    percent: 8
+    percent: 0
   theme_name: base16-eighties.dark
   padding:
-    horizontal: 2
-    vertical: 1
+    horizontal: 0
+    vertical: 0
 
 execution_output:
   colors:
