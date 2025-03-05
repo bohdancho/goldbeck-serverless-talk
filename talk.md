@@ -349,6 +349,7 @@ Bonus: Benchmarking-Codeschnipsel
 <!-- speaker_note: nach `Lösung` im Browser zeigen... -->
 
 <!-- end_slide -->
+
 Bonus: Benchmarking-Codeschnipsel
 ---
 
@@ -402,6 +403,98 @@ function PersistForBenchmarking(
   };
 }
 ```
+
+<!-- end_slide -->
+Bonus: Benchmarking-Codeschnipsel
+---
+
+<!-- column_layout: [1,1,1] -->
+<!-- column: 0 -->
+```ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const dbName = 'MyDatabase';
+const storeName = 'MyStore';
+
+// Open (or create) the database
+const request = indexedDB.open(dbName, 1);
+
+request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+  const db = (event.target as IDBOpenDBRequest).result;
+
+  if (!db.objectStoreNames.contains(storeName)) {
+    db.createObjectStore(storeName, { keyPath: 'id' });
+  }
+};
+
+request.onsuccess = () => {
+  console.log('Database initialized successfully');
+};
+```
+
+<!-- column: 1 -->
+```ts
+// Function to write a string to the database with a specific key
+export function writeToDB(
+  key: number | string,
+  value: unknown,
+  logOnComplete = false
+): void {
+  const request = indexedDB.open(dbName, 1);
+  const serializedValue = JSON.stringify(value);
+
+  request.onsuccess = (event: Event) => {
+    const db = (event.target as IDBOpenDBRequest).result;
+    const transaction = db.transaction(storeName, 'readwrite');
+    const store = transaction.objectStore(storeName);
+
+    store.put({ id: key, value: serializedValue });
+
+    transaction.oncomplete = () => {
+      if (logOnComplete)
+        console.log(`Data written for key ${key}:`, serializedValue);
+    };
+
+    transaction.onerror = () => {
+      console.error('Write transaction failed:', transaction.error);
+    };
+  };
+
+  request.onerror = () => {
+    console.error('Database error:', request.error);
+  };
+}
+```
+
+<!-- column: 2 -->
+```ts
+// Function to read a string from the database by key
+export function readFromDB(key: number | string): Promise<any | null> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName, 1);
+
+    request.onsuccess = (event: Event) => {
+      const db = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction(storeName, 'readonly');
+      const store = transaction.objectStore(storeName);
+
+      const getRequest = store.get(key);
+
+      getRequest.onsuccess = () => {
+        resolve(getRequest.result ? JSON.parse(getRequest.result.value) : null);
+      };
+
+      getRequest.onerror = () => {
+        reject(new Error('Read transaction failed'));
+      };
+    };
+
+    request.onerror = () => {
+      reject(new Error('Database error'));
+    };
+  });
+}
+```
+
 
 <!-- end_slide -->
 
