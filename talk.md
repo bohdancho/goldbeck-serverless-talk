@@ -500,6 +500,10 @@ export function readFromDB(key: number | string): Promise<any | null> {
 
 Vielen Dank für eure Aufmerksamkeit!
 ---
+
+- Github <span style="color:blue">@bohdancho/goldbeck-serverless-talk</span>
+- Linkedin <span style="color:blue">@bohdancho</span>
+
 ![image:width:30%](./assets/pepe.png)
 
 <!-- end_slide -->
